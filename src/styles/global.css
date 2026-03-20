@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* Dino theme overrides */
+[data-og-theme="dino"] {
+  --og-bg-void: #0d0800;
+  --og-bg-glass: rgba(13, 8, 0, 0.72);
+  --og-bg-glass-hover: rgba(20, 12, 0, 0.82);
+  --og-bg-glass-active: rgba(26, 16, 0, 0.88);
+  --og-bg-surface: rgba(20, 14, 4, 0.55);
+  --og-border: rgba(212, 163, 115, 0.1);
+  --og-border-hover: rgba(212, 163, 115, 0.2);
+  --og-border-active: rgba(212, 163, 115, 0.3);
+  --og-accent: #d4a373;
+  --og-accent-dim: rgba(212, 163, 115, 0.15);
+  --og-accent-glow: rgba(212, 163, 115, 0.3);
+  --og-shadow-glow: 0 0 20px rgba(212, 163, 115, 0.15);
+  --og-font-display: 'Syne', sans-serif;
+}
+
+/* Base reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: #0d0800;
+  color: rgba(230, 240, 255, 0.95);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar for glass panels */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 163, 115, 0.2);
+  border-radius: 9999px;
+}
+
+/* Time slider */
+.time-slider-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 16px;
+  pointer-events: none;
+}
+
+.time-slider-panel {
+  width: 100%;
+  max-width: 600px;
+  pointer-events: auto;
+  padding: 16px 24px 20px;
+}
+
+.time-slider-value {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: rgba(230, 240, 255, 0.95);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.time-slider-value span {
+  color: #d4a373;
+  font-weight: 600;
+}
+
+.time-slider-track {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.time-slider-track input[type="range"] {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  outline: none;
+  position: relative;
+  z-index: 2;
+}
+
+.time-slider-track input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #ef476f 0%,
+    #ef476f 27.4%,
+    #56d6a0 27.4%,
+    #56d6a0 57.5%,
+    #4cc9f0 57.5%,
+    #4cc9f0 100%
+  );
+}
+
+.time-slider-track input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #d4a373;
+  border: 2px solid rgba(230, 240, 255, 0.9);
+  box-shadow: 0 0 12px rgba(212, 163, 115, 0.4);
+  margin-top: -8px;
+  cursor: grab;
+  transition: box-shadow 150ms ease;
+}
+
+.time-slider-track input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  box-shadow: 0 0 20px rgba(212, 163, 115, 0.6);
+  transform: scale(1.1);
+}
+
+.time-slider-track input[type="range"]::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    #ef476f 0%,
+    #ef476f 27.4%,
+    #56d6a0 27.4%,
+    #56d6a0 57.5%,
+    #4cc9f0 57.5%,
+    #4cc9f0 100%
+  );
+  border: none;
+}
+
+.time-slider-track input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #d4a373;
+  border: 2px solid rgba(230, 240, 255, 0.9);
+  box-shadow: 0 0 12px rgba(212, 163, 115, 0.4);
+  cursor: grab;
+}
+
+.time-slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  position: relative;
+}
+
+.time-slider-tick {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  text-align: center;
+}
+
+.time-slider-tick.triassic { color: #ef476f; }
+.time-slider-tick.jurassic { color: #56d6a0; }
+.time-slider-tick.cretaceous { color: #4cc9f0; }
+
+.time-slider-tick-divider {
+  position: absolute;
+  top: -22px;
+  width: 1px;
+  height: 12px;
+  background: rgba(230, 240, 255, 0.15);
+}
+
+/* Era chip overrides for dino */
+[data-og-theme="dino"] .og-chip[data-era="Triassic"][aria-pressed="true"] {
+  background: rgba(239, 71, 111, 0.15);
+  border-color: #ef476f;
+  color: #ef476f;
+}
+
+[data-og-theme="dino"] .og-chip[data-era="Jurassic"][aria-pressed="true"] {
+  background: rgba(86, 214, 160, 0.15);
+  border-color: #56d6a0;
+  color: #56d6a0;
+}
+
+[data-og-theme="dino"] .og-chip[data-era="Cretaceous"][aria-pressed="true"] {
+  background: rgba(76, 201, 240, 0.15);
+  border-color: #4cc9f0;
+  color: #4cc9f0;
+}
+
+/* Attribution bar */
+.attribution-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  text-align: center;
+  padding: 6px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(120, 140, 170, 0.5);
+  pointer-events: none;
+}
+
+.attribution-bar a {
+  color: rgba(212, 163, 115, 0.5);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.attribution-bar a:hover {
+  color: #d4a373;
+}
+
+/* Search bar positioning */
+.search-container {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  width: 100%;
+  max-width: 360px;
+  padding: 0 16px;
+}
+
+/* Adjust sidebar bottom to not overlap time slider */
+.og-sidebar {
+  bottom: 100px !important;
+}
+
+/* Mobile bottom adjustments */
+@media (max-width: 767px) {
+  .time-slider-panel {
+    max-width: 100%;
+  }
+
+  .search-container {
+    max-width: 280px;
+  }
+
+  .time-slider-container {
+    padding: 0 8px 8px;
+  }
+}

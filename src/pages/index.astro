@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DinoApp from '../components/DinoApp';
+import '@openglobes/core/tokens.css';
+import '../styles/global.css';
+---
+
+<Layout title="DinoGlobe — Dinosaur Fossils Worldwide">
+  <DinoApp client:load />
+</Layout>
