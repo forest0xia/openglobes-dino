@@ -24,7 +24,7 @@ Interactive 3D globe showing 22,000+ dinosaur fossil discovery sites worldwide. 
 | Globe engine | [@openglobes/core](https://github.com/openglobes/openglobes-core) (Three.js + three-globe) |
 | Styling | [Tailwind CSS 4](https://tailwindcss.com) + openglobes design system tokens |
 | Search | [Fuse.js](https://www.fusejs.io/) |
-| Hosting | [Cloudflare Pages](https://pages.cloudflare.com) |
+| Hosting | [GitHub Pages](https://pages.github.com) |
 
 ## Project Structure
 
@@ -114,8 +114,8 @@ CI/CD is configured in `.github/workflows/deploy.yml`:
 
 1. Clones `openglobes-etl`, copies `output/dino` to `./data`
 2. Installs dependencies and builds with `pnpm build`
-3. Deploys `dist/` to Cloudflare Pages at `dino.openglobes.com`
+3. Deploys `dist/` to GitHub Pages at `dino.openglobes.com`
 
 ## License
 
-Data: [Paleobiology Database](https://paleobiodb.org) — CC-BY 4.0
+Code: AGPL-3.0. Data: [Paleobiology Database](https://paleobiodb.org) — CC-BY 4.0.

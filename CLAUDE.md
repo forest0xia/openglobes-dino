@@ -4,24 +4,34 @@
 dino.openglobes.com — an interactive 3D globe showing dinosaur fossil discovery sites worldwide.
 Part of the OpenGlobes series (openglobes.com). Built with Astro 5 + @openglobes/core.
 
-## Setup
-Core engine is at sibling directory: ../openglobes-core
+## Setup (local dev)
 ```bash
-cd ../openglobes-core && pnpm link --global
-cd ../openglobes-dino && pnpm link --global @openglobes/core
+# 1. Clone sibling repos if not present
+#    ../openglobes-core — the shared globe engine
+#    ../openglobes-etl  — data pipeline (has pre-generated output)
+# 2. Symlink data from ETL output
+ln -s ../openglobes-etl/output/dino data
+# 3. Install deps (file: link resolves to sibling core)
+pnpm install
+# 4. Build core first if not already built
+cd ../openglobes-core && pnpm build && cd ../openglobes-dino
+# 5. Run dev server
+pnpm dev
 ```
-Or in package.json: `"@openglobes/core": "file:../openglobes-core"`
+Data is ALREADY GENERATED from the Paleobiology Database (CC-BY 4.0). Do NOT call any external APIs.
+
+## What @openglobes/core provides
+This repo imports the shared engine. Key exports you'll use:
+- **Components:** `Globe`, `GlobeRoot`, `FilterPanel`, `DetailDrawer`, `SearchBar`, `MobileSheet`, `ZoomControls`, `LoadingOrb`
+- **Hooks:** `useSpatialIndex` (fetches JSON tiles by viewport), `useResponsive` (breakpoints), `useGlobeTheme` (theme context)
+- **Layers:** `applyArcLayer` (animated arcs), `applyTrailLayer` (multi-waypoint flow)
+- **CSS:** `@openglobes/core/tokens.css` — all `og-*` utility classes (og-glass, og-chip, og-mono-value, etc.)
+- **Types:** `GlobeTheme`, `FilterConfig`, `DetailFieldConfig`, `PointItem`, `ClusterItem`
+- **Globe callbacks:** `onSceneReady(refs)` for Three.js scene access, `onFrame(dt)` for animation loop
+- Do NOT modify core from this repo. If you need core changes, note them in .agent-state/dino-globe.md.
 
 ## Data
-Pre-built tile data symlinked from ETL repo:
-```bash
-ln -s ../openglobes-etl/output/dino data
-```
-Data is ALREADY GENERATED from the Paleobiology Database (CC-BY 4.0 — commercial use OK).
-Do NOT call any external APIs. All data is static JSON.
-
-Files:
-- data/tiles/z{0-7}/{x}_{y}.json — spatial tiles
+- data/tiles/z{0-7}/{x}_{y}.json — spatial tiles (clusters at z0-3, points at z4-7)
 - data/species/{id}.json — per-fossil-taxon detail files
 - data/index.json — master index with filter definitions
 - data/search.json — compact taxon list for Fuse.js search
@@ -30,7 +40,7 @@ Files:
 - Astro 5 with React integration (@astrojs/react)
 - @openglobes/core for Globe, FilterPanel, DetailDrawer, hooks
 - Tailwind 4
-- Static site output → Cloudflare Pages at dino.openglobes.com
+- Static site output — deployed to GitHub Pages at dino.openglobes.com
 
 ## Design direction
 Read ../openglobes-core/docs/DESIGN_SYSTEM.md for the full design system.
@@ -96,9 +106,11 @@ Single page:
 - Target: Lighthouse mobile > 80
 
 ## CI/CD
-- .github/workflows/deploy.yml clones openglobes-etl, copies output/dino to ./data
-- Deploys to Cloudflare Pages at dino.openglobes.com
-- data/ is in .gitignore (symlink locally, copied in CI)
+- .github/workflows/deploy.yml builds and deploys on push to main
+- Workflow clones openglobes-etl, copies output/dino to ./data
+- Workflow clones openglobes-core, builds it so file: link resolves
+- Deploys static output to GitHub Pages at dino.openglobes.com
+- data/ is in .gitignore (symlinked locally, copied in CI)
 
 ## Session continuity
 - Update .agent-state/dino-globe.md after every session

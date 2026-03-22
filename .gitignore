@@ -2,3 +2,5 @@ node_modules/
 dist/
 .astro/
 data/
+.playwright-mcp
+.DS_Store

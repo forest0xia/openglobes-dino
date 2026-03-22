@@ -16,6 +16,13 @@ export const DINO_THEME: GlobeTheme = {
   globeTexture: '//unpkg.com/three-globe/example/img/earth-topology.png',
   atmosphereColor: '#d4a373',
   backgroundColor: '#0d0800',
+  terrain: {
+    bumpMap: '//cdn.jsdelivr.net/npm/three-globe/example/img/earth-topology.png',
+    bumpScale: 15,
+    specularMap: '//cdn.jsdelivr.net/npm/three-globe/example/img/earth-water.png',
+    specular: '#8b7355',
+    shininess: 10,
+  },
 
   pointColor: (item: PointItem) => {
     const era = item.era as string;
